@@ -1,0 +1,67 @@
+body{margin-top: 0;background: #000}
+video::-webkit-media-controls {
+  display:none !important;
+}
+.img100{width: 100%}
+.back{position: fixed;top: 1rem;left: 1rem;z-index: 10;width: 2rem;height: 2rem}
+.back img{width: 0.975rem}
+.zy_title{display: none}
+.playvideo{position: relative;padding: 0 0.1rem;background: #000000}
+#modelView{position: absolute;left:50%;top: 50%;width: 3.7rem;margin-left: -1.85rem;margin-top: -2.2rem}
+#modelView img{width: 3.7rem;}
+.zy_controls{bottom: -45px}
+.nexttop{background: #000;width: 18.75rem;height: 32rem;position: relative;overflow: hidden;}
+.nexttop .nextback{width: 100%;-webkit-animation: show 2s linear;-webkit-animation-iteration-count:1;-webkit-animation-direction:normal;position: absolute;z-index: 1}
+.nexttop .nexttext{width: 100%;-webkit-animation: textshow 2s linear;-webkit-animation-iteration-count:1;-webkit-animation-direction:normal;position: absolute;z-index: 2}
+.dec_play{display: none}
+.zy_wrap,video{background: #000}
+@keyframes show{
+    0%{
+        opacity: 0
+    }
+    100%{
+        opacity: 1
+    }
+}
+@-webkit-keyframes show{
+    0%{
+        opacity: 0
+    }
+    100%{
+        opacity: 1
+    }
+}
+@keyframes textshow{
+    0%{
+        top: 100%
+    }
+    100%{
+        top: 0
+    }
+}
+@-webkit-keyframes textshow{
+    0%{
+        top: 100%
+    }
+    100%{
+        top: 0
+    }
+}
+.btm{width: 1rem;height: 0.55rem;position: fixed;z-index: 100;bottom: 0.5rem;left: 50%;margin-left: -0.5rem;-webkit-animation: move 0.7s linear 2s infinite alternate;opacity: 0}
+@keyframes move{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@-webkit-keyframes move{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.btm img{width: 100%}

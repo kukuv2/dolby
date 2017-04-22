@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>杜比影院 5 月片单</title>
+    <meta name="keywords"
+          content="">
+    <meta name="description"
+          content="你所需要了解的一切，从这里寻找。">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+    <meta content="telephone=no"
+          name="format-detection">
+    <meta name="apple-mobile-web-app-capable"
+          content="no">
+    <link rel="stylesheet"
+          href="./styles/swiper.min.css">
+    <script type="text/javascript"
+            src="scripts/jquery.js"></script>
+    <script type="text/javascript"
+            src="scripts/zepto.js"></script>
+    <script type="text/javascript"
+            src="scripts/touch.js"></script>
+    <link rel="stylesheet"
+          type="text/css"
+          href="styles/common.css">
+    <script type="text/javascript"
+            src="scripts/rem.js"></script>
+    <script type="text/javascript"
+            src="scripts/fastclick.js"></script>
+    <style type="text/css">
+        html, body {
+            position: relative;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        body {
+            margin-top: 0;
+            background: #84B9CB
+        }
+
+        .img100 {
+            width: 100%
+        }
+
+        .link {
+            position: relative;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .link .img100 {
+            z-index: 1;
+        }
+
+        .link span {
+            position: relative;
+            -webkit-animation: move 0.7s linear 0ms infinite alternate;
+        }
+
+        .link span img {
+            width: 2.5rem;
+        }
+
+        @keyframes move {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes move {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .contrast {
+            position: relative;
+            width: 18.75rem;
+            overflow: hidden;
+        }
+
+        .contrast .img100 {
+            z-index: 1;
+        }
+
+        .indexbottom {
+            z-index: 2;
+            width: 18.75rem;
+            position: absolute;
+            top: 12.9rem;
+        }
+
+        .indexbottom img {
+            width: 100%;
+        }
+
+        .indextop {
+            z-index: 3;
+            width: 18.75rem;
+            position: absolute;
+            top: 12.9rem;
+        }
+
+        .indextop .img {
+            z-index: 3;
+            position: absolute;
+            background: url(images/indexbottom.jpg) no-repeat;
+            background-size: 18.75rem 12.5rem;
+            width: 100%;
+            height: 12.5rem;
+            -webkit-animation: moveback 5s linear 0ms infinite alternate;
+        }
+
+        .indexline {
+            width: 0.2rem;
+            z-index: 4;
+            position: absolute;
+            top: -0.2rem;
+            left: 0;
+            margin-left: -0.1rem;
+            -webkit-animation: moveline 5s linear 0ms infinite alternate;
+        }
+
+        .indexline img {
+            width: 100%
+        }
+
+        @keyframes moveback {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        @-webkit-keyframes moveback {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes moveline {
+            0% {
+                left: 0%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        @-webkit-keyframes moveline {
+            0% {
+                left: 0%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .swiper-pagination-bullet {
+            width: .6rem;
+            height: .6rem;
+        }
+
+        .b1 {
+            height: 100%;
+            background-size: cover;
+            background-image: url('./images/index51b.png');
+            /* Center slide text vertically */
+        }
+
+        @-webkit-keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translate3d(0, -100%, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .fadeInDown {
+            -webkit-animation: fadeInDown 2s;
+        }
+
+        @-webkit-keyframes fadeInTopLeft {
+            from {
+                opacity: 0;
+                transform: translate3d(1rem, 2rem, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @-webkit-keyframes shake {
+            0% {
+                transform: none;
+                transform: rotate(0);
+            }
+
+            25% {
+                transform: none;
+                transform: rotate(2deg);
+            }
+
+            50% {
+                transform: none;
+                transform: rotate(0deg);
+            }
+
+            75% {
+                transform: none;
+                transform: rotate(-2deg);
+            }
+
+            100% {
+                transform: none;
+                transform: rotate(0deg);
+            }
+        }
+
+        .shake {
+            -webkit-animation: shake 1s infinite;
+        }
+
+        .fadeInTopLeft {
+            -webkit-animation: fadeInTopLeft;
+        }
+
+        @-webkit-keyframes fadeInTopRight {
+            from {
+                opacity: 0;
+                transform: translate3d(-1rem, 2rem, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .fadeInTopRight {
+            -webkit-animation: fadeInTopRight;
+        }
+
+        @-webkit-keyframes fadeInBottomRight {
+            from {
+                opacity: 0;
+                transform: translate3d(-1rem, -2rem, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .fadeInBottomRight {
+            -webkit-animation: fadeInBottomRight;
+        }
+
+        @-webkit-keyframes fadeInBottomLeft {
+            from {
+                opacity: 0;
+                transform: translate3d(1rem, -2rem, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .fadeInBottomLeft {
+            -webkit-animation: fadeInBottomLeft;
+        }
+
+            
+        .flowerAnimate {
+            -webkit-animation-duration: 1s;
+            -webkit-animation-delay: 2s;
+            -webkit-animation-fill-mode: forwards;
+            -webkit-animation-timing-function: linear;
+        }
+
+        .b1center {
+            width: 11rem;
+            position: absolute;
+            top: 29%;
+            left: 17.5%;
+            height: 13rem;
+            z-index: 10;
+            background-size: contain;
+            background-image: url('./images/index1bCenter.png');
+        }
+
+        .b1_leftTop {
+            width: 10rem;
+            position: absolute;
+            top: 17%;
+            left: 6.5%;
+            height: 13.6rem;
+            z-index: 8;
+            background-size: contain;
+            background-image: url('./images/index1bLeftTop.png');
+            opacity: 0;
+        }
+
+        .b1_rightTop {
+            width: 17.4rem;
+            position: absolute;
+            top: 13%;
+            left: 11.5%;
+            height: 14.5rem;
+            z-index: 8;
+            background-size: contain;
+            background-image: url('./images/index1bRightTop.png');
+            opacity: 0;
+        }
+
+        .b1_rightBottom {
+            width: 8.8rem;
+            position: absolute;
+            top: 32%;
+            left: 51.5%;
+            height: 12.8rem;
+            z-index: 8;
+            background-size: contain;
+            background-image: url('./images/index1bRightBottom.png');
+            opacity: 0;
+        }
+
+        .b1_leftBottom {
+            width: 8.7rem;
+            position: absolute;
+            top: 45%;
+            left: 12.5%;
+            height: 8.45rem;
+            z-index: 8;
+            background-size: contain;
+            background-image: url('./images/index1bLeftBottom.png');
+            opacity: 0;
+        }
+
+        .link .flash1 {
+            top: -5.5rem;
+        }
+
+        .link .flash2 {
+            top: -5.288rem;
+        }
+        .link .flash3 {
+            top: -5.788rem;
+        }
+        .link .flash4 {
+            top: -5.788rem;
+        }
+        .animate-shake {
+
+        }
+
+        @-webkit-keyframes flashVideo {
+            0% {
+                background-image: url('images/WechatIMG83.png');
+            }
+            20% {
+                background-image: url('images/WechatIMG81.png');
+            }
+            40% {
+                background-image: url('images/WechatIMG82.png');
+            }
+            60% {
+                background-image: url('images/WechatIMG81.png');
+            }
+            80% {
+                background-image: url('images/WechatIMG82.png');
+            }
+            100% {
+                background-image: url('images/WechatIMG83.png');
+            }
+        }
+
+        .flashVideo {
+            width: 100%;
+            height: 11rem;
+            top:48%;
+            z-index: 100;
+            background-color: black;
+            background-size: cover;
+            -webkit-animation: flashVideo 1400ms infinite;
+            position: absolute;
+        }
+
+        .swiper-slide, img{
+            width: 100%;
+        }
+        .index53b{
+            background-image: url('images/index53b.png');
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+        }
+        .index54b{
+            background-image: url('images/index54b.png');
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+    <div id='wx_pic'
+         style='margin:0 auto;display:none;'>
+        <img src="images/weixinicon.jpg">
+    </div>
+</head>
+<body>
+    <div style="display: none">
+        <img src="./images/index1bCenter.png"
+             alt="">
+        <img src="./images/index1bLeftTop.png"
+             alt="">
+        <img src="./images/index1bRightTop.png"
+             alt="">
+        <img src="./images/index1bRightBottom.png"
+             alt="">
+        <img src="./images/index1bLeftBottom.png"
+             alt="">
+    </div>
+    <div class="img100 b1">
+        <div class="b1center fadeInDown"></div>
+        <div class="b1_leftTop fadeInTopLeft flowerAnimate"></div>
+        <div class="b1_leftBottom fadeInBottomLeft flowerAnimate"></div>
+        <div class="b1_rightTop fadeInTopRight flowerAnimate"></div>
+        <div class="b1_rightBottom fadeInBottomRight flowerAnimate"></div>
+    </div>
+    <img src="images/index52b.jpg"
+         class="img100">
+    <a href="views/next_1.html"
+       class="link">
+        <img src="images/index53b.jpg" alt="">
+        <span class="flash1"><img src="images/icon_1.png"></span>
+    </a>
+    <a href="views/next_2.html"
+       class="link">
+        <img src="images/index54b.jpg" alt="">
+        <span class="flash2"><img src="images/icon_1.png"></span>
+    </a>
+    <a href="views/next_3.html"
+       class="link">
+        <img src="images/index55b.jpg" alt="">
+        <span class="flash3"><img src="images/icon_1.png"></span>
+    </a>
+    <a href="views/next_4.html"
+       class="link">
+        <img src="images/index56b.jpg" alt="">
+        <span class="flash4"><img src="images/icon_1.png"></span>
+    </a>
+    <div style="width: 100%;height: 100%;position: relative">
+        <img src="images/index55b.png" style="margin-top: 3rem"
+             class="img100">
+        <div class="flashVideo"></div>
+    </div>
+    <br><br><br><br>
+    <!--<img src="images/index56b.png"
+         class="img100">-->
+    <br><br>
+    <br><br>
+</div>
+</body>
+<script src="./scripts/swiper.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var bodytop = $('body').scrollTop()
+        $('body').on('click', '.link', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var bodytop = $('body').scrollTop()
+            localStorage.setItem('bodytop', bodytop);
+            window.location.href = $(this).attr('href')
+        })
+        var bodytop = localStorage.getItem('bodytop');
+        if (bodytop) {
+            $('body').scrollTop(bodytop)
+        }
+
+        setTimeout(function() {
+            $('.flowerAnimate').each(function(index) {
+                $(this).attr('style', 'opacity: 1;-webkit-animation: shake 10s infinite;-webkit-animation-delay: '+index+'s;')
+            })
+        }, 4000)
+    })
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"
+        type="text/javascript"></script>
+<script src='../muyangren/js/sga_wxshare.js'></script>
+<script>
+    var shareParams = {
+        timeLineTitle: '杜比影院 4 月片单', //朋友圈分享标题
+        title: '杜比影院 4 月片单', //朋友分享标题
+        link: window.location.href,
+        imgUrl: 'http://www.sogoodapp.com/dolbyinfo/images/weixinicon.jpg', //分享图片
+        desc: '你所需要了解的一切，从这里寻找。' //朋友分享描述文字
+    };
+    var shareManager = new sga.WxShare();
+    shareManager.share(shareParams);
+</script>
+</html>
