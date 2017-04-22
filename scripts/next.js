@@ -4,7 +4,7 @@ $(function() {
 jQuery(document).ready(function($) {
 	$('body').on('click', '.back,.gohome', function(event) {
 		event.preventDefault();
-		history.back()
+		history.back(-1)
 	});
 	$('body').on('click', '#modelView', function(event) {
 		event.preventDefault();
