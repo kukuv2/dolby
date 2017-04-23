@@ -14,11 +14,13 @@ video::-webkit-media-controls {
 
 .nexttop .nextback {
     width: 100%;
+    opacity: 0;
     -webkit-animation: show 2s linear;
     -webkit-animation-iteration-count: 1;
     -webkit-animation-direction: normal;
     -webkit-animation-delay: 1s;
     position: absolute;
+    animation-fill-mode: forwards;
     z-index: 1
 }
 
