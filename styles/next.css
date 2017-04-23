@@ -15,10 +15,11 @@ video::-webkit-media-controls {
 .nexttop .nextback {
     width: 100%;
     opacity: 0;
-    /*-webkit-animation: show 3s linear;*/
+    visibility: hidden;
+    -webkit-animation: show 3s linear;
     -webkit-animation-iteration-count: 1;
     -webkit-animation-direction: normal;
-    -webkit-animation-delay: 1s;
+    /*-webkit-animation-delay: 1s;*/
     position: absolute;
     animation-fill-mode: forwards;
     z-index: 1
@@ -54,7 +55,7 @@ html.ie .reveal [data-reveal-item] {
 
 .nexttop .nexttext {
     width: 100%;
-    /*-webkit-animation: textshow 4s linear;*/
+    -webkit-animation: textshow 4s linear;
     -webkit-animation-iteration-count: 1;
     -webkit-animation-direction: normal;
     position: absolute;
