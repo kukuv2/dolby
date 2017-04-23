@@ -65,7 +65,11 @@
         }
 
         .img100 {
-            width: 100%
+            width: 100%;
+            display: block;
+            vertical-align: top;
+            border: 0;
+            outline: 0;
         }
 
         .link {
@@ -80,7 +84,7 @@
         }
 
         .link span {
-            position: relative;
+            position: absolute;
             -webkit-animation: move 0.7s linear 0ms infinite alternate;
         }
 
@@ -316,7 +320,7 @@
         }
 
         .fadeInBottomLeft {
-            -webkit-animation: fadeInBottomLeft 2s;
+            -webkit-animation: fadeInBottomLeft 2s ease;
         }
 
             
@@ -335,7 +339,7 @@
             height: 13rem;
             z-index: 10;
             background-size: contain;
-            background-image: url('./images/index1bCenter.png');
+            background-image: url('./images/flower/index1bCenter.png');
         }
 
         .b1_leftTop {
@@ -436,17 +440,21 @@
 */
 
         .link .flash1 {
-            top: -5.5rem;
+            top: 28.5rem;
+            left: 8.2rem;
         }
 
         .link .flash2 {
-            top: -5.288rem;
+            top: 29.5rem;
+            left: 8.2rem;
         }
         .link .flash3 {
-            top: -5.788rem;
+            top: 29rem;
+            left: 8.2rem;
         }
         .link .flash4 {
-            top: -5.788rem;
+            top: 29.5rem;
+            left: 8.2rem;
         }
         .animate-shake {
 
@@ -508,15 +516,15 @@
 </head>
 <body>
     <div style="display: none">
-        <img src="./images/index1bCenter.png"
+        <img src="./images/flower/index1bCenter.png"
              alt="">
-        <img src="./images/index1bLeftTop.png"
+        <img src="./images/flower/index1bLeftTop.png"
              alt="">
-        <img src="./images/index1bRightTop.png"
+        <img src="./images/flower/index1bRightTop.png"
              alt="">
-        <img src="./images/index1bRightBottom.png"
+        <img src="./images/flower/index1bRightBottom.png"
              alt="">
-        <img src="./images/index1bLeftBottom.png"
+        <img src="./images/flower/index1bLeftBottom.png"
              alt="">
     </div>
     <div class="img100 b1">
@@ -530,22 +538,22 @@
          class="img100">
     <a href="views/next_1.html"
        class="link">
-        <img src="images/index53b.jpg" alt="">
+        <img src="images/index53b.jpg" class="img100" alt="">
         <span class="flash1"><img src="images/icon_1.png"></span>
     </a>
     <a href="views/next_2.html"
        class="link">
-        <img src="images/index54b.jpg" alt="">
+        <img src="images/index54b.jpg" class="img100" alt="">
         <span class="flash2"><img src="images/icon_1.png"></span>
     </a>
     <a href="views/next_3.html"
        class="link">
-        <img src="images/index55b.jpg" alt="">
+        <img src="images/index55b.jpg" class="img100" alt="">
         <span class="flash3"><img src="images/icon_1.png"></span>
     </a>
     <a href="views/next_4.html"
        class="link">
-        <img src="images/index56b.jpg" alt="">
+        <img src="images/index56b.jpg" class="img100" alt="">
         <span class="flash4"><img src="images/icon_1.png"></span>
     </a>
     <img src="./images/line.jpg"
