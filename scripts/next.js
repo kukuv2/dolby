@@ -27,7 +27,9 @@ jQuery(document).ready(function($) {
         var realItem = $('[data-reveal-item]')
         realItem.each(function (index, item) {
             setTimeout(function () {
-                $(item).addClass('reveal-item-shown')
+                if($(item).hasClass('nexttext')){
+                    $(item).addClass('reveal-item-shown')
+                }
             })
         })
     })
