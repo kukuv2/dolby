@@ -15,7 +15,7 @@ video::-webkit-media-controls {
 .nexttop .nextback {
     width: 100%;
     opacity: 0;
-    -webkit-animation: show 2s linear;
+    /*-webkit-animation: show 3s linear;*/
     -webkit-animation-iteration-count: 1;
     -webkit-animation-direction: normal;
     -webkit-animation-delay: 1s;
@@ -24,9 +24,37 @@ video::-webkit-media-controls {
     z-index: 1
 }
 
+.reveal [data-reveal-item] {
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transform: translateY(12px);
+    transform: translateY(12px);
+    -webkit-transition: 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-transition-property: opacity, -webkit-transform;
+    transition-property: opacity, transform
+}
+
+html.ie .reveal [data-reveal-item] {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none
+}
+
+.reveal.reveal-initialized [data-reveal-item] {
+    visibility: visible
+}
+
+.reveal.reveal-shown .reveal-item-shown {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+}
+
 .nexttop .nexttext {
     width: 100%;
-    -webkit-animation: textshow 4s linear;
+    /*-webkit-animation: textshow 4s linear;*/
     -webkit-animation-iteration-count: 1;
     -webkit-animation-direction: normal;
     position: absolute;
