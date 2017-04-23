@@ -11,8 +11,25 @@ video::-webkit-media-controls {
 #modelView img{width: 3.7rem;}
 .zy_controls{bottom: -45px}
 .nexttop{background: #000;width: 18.75rem;height: 32rem;position: relative;overflow: hidden;}
-.nexttop .nextback{width: 100%;-webkit-animation: show 2s linear;-webkit-animation-iteration-count:1;-webkit-animation-direction:normal;position: absolute;z-index: 1}
-.nexttop .nexttext{width: 100%;-webkit-animation: textshow 2s linear;-webkit-animation-iteration-count:1;-webkit-animation-direction:normal;position: absolute;z-index: 2}
+
+.nexttop .nextback {
+    width: 100%;
+    -webkit-animation: show 2s linear;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: normal;
+    -webkit-animation-delay: 1s;
+    position: absolute;
+    z-index: 1
+}
+
+.nexttop .nexttext {
+    width: 100%;
+    -webkit-animation: textshow 4s linear;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: normal;
+    position: absolute;
+    z-index: 2
+}
 .dec_play{display: none}
 .zy_wrap,video{background: #000}
 @keyframes show{
