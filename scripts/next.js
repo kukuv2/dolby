@@ -21,4 +21,14 @@ jQuery(document).ready(function($) {
 			$('.btm').remove()
 		}
 	});
+    $(function(){
+        $('.reveal').addClass('reveal-initialized')
+        $('.reveal').addClass('reveal-shown')
+        var realItem = $('[data-reveal-item]')
+        realItem.each(function (index, item) {
+            setTimeout(function () {
+                $(item).addClass('reveal-item-shown')
+            })
+        })
+    })
 });

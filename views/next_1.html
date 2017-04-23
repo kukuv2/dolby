@@ -33,39 +33,6 @@
             height: 6.2rem;
             background-size: cover;
         }
-        .topC{
-            overflow: visible;
-            position: relative;
-            width: 100%;
-            z-index: 1;
-            min-height: 100vh;
-            height: 150vh;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-        .tocT{
-            height: 100vh;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            min-height: 730px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .topB{
-            overflow: hidden;
-            position: -webkit-sticky;
-            position: -moz-sticky;
-            position: -ms-sticky;
-            position: sticky;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            box-sizing: border-box;
-        }
     </style>
 </head>
 <body>
@@ -95,18 +62,6 @@
 		<img src="../images/n1/nextimg_3.jpg" class="img100">
 		<img src="../images/n1/nextimg_4_1.jpg" class="img100 gohome">
 	</div>
-    <script>
-        $(function(){
-            $('.reveal').addClass('reveal-initialized')
-            $('.reveal').addClass('reveal-shown')
-            var realItem = $('[data-reveal-item]')
-            realItem.each(function (index, item) {
-                setTimeout(function () {
-                    $(item).addClass('reveal-item-shown')
-                })
-            })
-        })
-    </script>
 </body>
 <script type="text/javascript" src="../scripts/next.js"></script>
 </html>
