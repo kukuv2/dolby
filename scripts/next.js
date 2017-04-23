@@ -1,18 +1,19 @@
+
 $(function() {
   FastClick.attach(document.body);
 });
-jQuery(document).ready(function($) {
+$(document).ready(function($) {
 	$('body').on('click', '.back,.gohome', function(event) {
 		event.preventDefault();
-		history.back(-1)
+		history.go(-1)
 	});
-	$('body').on('click', '#modelView', function(event) {
+	$('body').on('click', '.video', function(event) {
 		event.preventDefault();
 		$('.zy_controls').css({
 			'bottom': 0
 		});
-		$('.zy_play').trigger('click')
-		$(this).hide()
+        $('.zy_play').trigger('click')
+		// $(this).hide()
 	});
 	zymedia('video',{autoplay: false});
 	var windowheight = $(window).height()
@@ -21,6 +22,28 @@ jQuery(document).ready(function($) {
 			$('.btm').remove()
 		}
 	});
+    var u = navigator.userAgent
+    var android = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1
+    if(android){
+        $(".topB").css({
+            'position': 'fixed'
+        })
+        var height = $(".tocT").height()
+        height = height/2
+        $(window).on('scroll', function (e) {
+            var windowScroll = $(window).scrollTop()
+            if(windowScroll > height){
+                $(".topB").css({
+                    'position': 'absolute'
+                })
+            }else{
+                $(".topB").css({
+                    'position': 'fixed'
+                })
+            }
+        })
+    }
+    // $(".topB").sticky({top:0,bottom:0});
     $(function(){
         $('.reveal').addClass('reveal-initialized')
         $('.reveal').addClass('reveal-shown')
