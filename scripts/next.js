@@ -5,6 +5,7 @@ $(function() {
 $(document).ready(function($) {
 	$('body').on('click', '.back,.gohome', function(event) {
 		event.preventDefault();
+        // location.href
 		history.go(-1)
 	});
 	$('body').on('click', '.video', function(event) {

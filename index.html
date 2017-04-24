@@ -573,18 +573,19 @@
 <script src="./scripts/swiper.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        var bodytop = $('body').scrollTop()
-        $('body').on('click', '.link', function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-            var bodytop = $('body').scrollTop()
-            localStorage.setItem('bodytop', bodytop);
-            window.location.href = $(this).attr('href')
-        })
         var bodytop = localStorage.getItem('bodytop');
         if (bodytop) {
             $('body').scrollTop(bodytop)
         }
+        $('body').on('click', '.link', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var abodytop = $('body').scrollTop()
+            localStorage.setItem('bodytop', abodytop);
+            window.location.href = $(this).attr('href')
+        })
+
+
 
         setTimeout(function() {
             $('.flowerAnimate').each(function(index) {
