@@ -1,1 +1,994 @@
-!function(){function b(a,b){return parseInt(a.style[b]||getComputedStyle(a,null).getPropertyValue(b))}function c(a,b){return new RegExp("(\\s|^)"+b+"(\\s|$)").test(a.className)}function d(a,b){a.classList?a.classList.add(b):c(a,b)||(a.className+=""+b)}function e(a,b){a.classList?a.classList.remove(b):c(a,b)&&(a.className=a.className.replace(new RegExp("(\\s|^)"+b+"(\\s|$)")," ").replace(/^\s+|\s+$/g,""))}function f(a,b){(!isFinite(a)||0>a)&&(a=0);var c=b.alwaysShowHours?[0]:[];return Math.floor(a/3600)%24&&c.push(Math.floor(a/3600)%24),c.push(Math.floor(a/60)%60),c.push(Math.floor(a%60)),c=c.join(":"),1==b.timeFormatType&&(c=c.replace(/(:|^)([0-9])(?=:|$)/g,"$10$2")),c}function g(){return document.fullscreenElement||document.mozFullScreen||document.webkitIsFullScreen}function h(a){var b,c;switch(a=a.toLowerCase().split("?")[0],b=a.substring(a.lastIndexOf(".")+1),c=/mp4|m4v|ogg|ogv|m3u8|webm|webmv|wmv|mpeg|mov/gi.test(b)?"video/":"audio/",b){case"mp4":case"m4v":case"m4a":return c+"mp4";case"webm":case"webma":case"webmv":return c+"webm";case"ogg":case"oga":case"ogv":return c+"ogg";case"m3u8":return"application/x-mpegurl";case"ts":return c+"mp2t";default:return c+b}}function i(a,b){return a&&!b?h(a):b&&~b.indexOf(";")?b.substr(0,b.indexOf(";")):b}function j(b,c,d){var f,g,h,e=[];if(c.type)if("string"==typeof c.type)e.push({type:c.type,url:d});else for(f=0;f<c.type.length;f++)e.push({type:c.type[f],url:d});else if(null!==d)e.push({type:i(d,b.getAttribute("type")),url:d});else for(f=0;f<b.children.length;f++)g=b.children[f],1==g.nodeType&&"source"==g.tagName.toLowerCase()&&(d=g.getAttribute("src"),e.push({type:i(d,g.getAttribute("type")),url:d}));if(a.features.isBustedAndroid&&(b.canPlayType=function(a){return/video\/(mp4|m4v)/i.test(a)?"maybe":""}),a.features.isChromium&&(b.canPlayType=function(a){return/video\/(webm|ogv|ogg)/i.test(a)?"maybe":""}),a.features.supportsCanPlayType)for(f=0;f<e.length;f++)if("video/m3u8"==e[f].type||""!==b.canPlayType(e[f].type).replace(/no/,"")||""!==b.canPlayType(e[f].type.replace(/mp3/,"mpeg")).replace(/no/,"")||""!==b.canPlayType(e[f].type.replace(/m4a/,"mp4")).replace(/no/,"")){h=!0;break}return h}var k,a={};a.config={type:"",mediaTitle:"",nativeControls:!1,autoplay:!1,preload:"none",videoWidth:"100%",videoHeight:"auto",aspectRation:16/9,audioWidth:"100%",audioHeight:44,autoLoop:!1,timeFormatType:1,alwaysShowHours:!1,alwaysShowControls:!1,hideVideoControlsOnLoad:!1,enableFullscreen:!0,pauseOtherPlayers:!0,duration:0,success:null,error:null},function(a){var b=window.navigator.userAgent.toLowerCase(),c=document.createElement("video");a.isiOS=/iphone|ipod|ipad/i.test(b)&&!window.MSStream,a.isAndroid=/android/i.test(b)&&!window.MSStream,a.isBustedAndroid=/android 2\.[12]/i.test(b),a.isChromium=/chromium/i.test(b),a.hasTouch="ontouchstart"in window,a.supportsCanPlayType="undefined"!=typeof c.canPlayType,a.isVendorBigPlay=/iphone/i.test(b)&&!window.MSStream,a.isVendorControls=/baidu/i.test(b),a.isVendorFullscreen=/micromessenger|weibo/i.test(b),a.isVendorAutoplay=/v819mini/i.test(b)||a.isiOS,a.nativeFullscreenPrefix=function(){return c.requestFullScreen?"":c.webkitRequestFullScreen?"webkit":c.mozRequestFullScreen?"moz":c.msRequestFullScreen?"ms":"-"}(),a.hasOldNativeFullScreen="-"==a.nativeFullscreenPrefix&&c.webkitEnterFullscreen,a.hasOldNativeFullScreen&&/mac os x 10_5/i.test(b)&&(a.nativeFullscreenPrefix="-",a.hasOldNativeFullScreen=!1)}(a.features={}),k=0,a.players={},a.MediaPlayer=function(b,c){var e,f,g,i,d=this;if(!b.isInstantiated&&(b.isInstantiated=!0,d.media=b,f=d.media.tagName.toLowerCase(),/audio|video/.test(f))){d.isVideo="video"===f,d.options={};for(e in a.config)d.options[e]=a.config[e];try{for(e in c)d.options[e]=c[e];g=JSON.parse(d.media.getAttribute("data-config"));for(e in g)d.options[e]=g[e]}catch(h){}d.options.autoplay&&(d.options.autoplay=!a.features.isVendorAutoplay),d.isVideo||(d.options.alwaysShowControls=!0),d.options.nativeControls||a.features.isVendorControls?d.media.setAttribute("controls","controls"):(i=d.media.getAttribute("src"),i=""===i?null:i,j(d.media,d.options,i)?(d.id="zym_"+k++,a.players[d.id]=d,d.init()):alert("不支持此"+(d.isVideo?"视":"音")+"频"))}},a.MediaPlayer.prototype={isControlsVisible:!0,isFullScreen:!1,setPlayerSize:function(a){var f,g,d=this,e=b(d.container,"width");a>e&&(d.width=e),d.enableAutoSize&&(f=d.media.videoWidth,g=d.media.videoHeight,f&&g&&Math.abs(d.options.aspectRation-f/g)<.1&&(d.options.aspectRation=f/g),d.height=parseInt(e/d.options.aspectRation)),d.container.style.width=d.width+"px",d.media.style.height=d.container.style.height=d.height+"px"},showControls:function(){var a=this;a.isControlsVisible||(a.controls.style.bottom=0,a.options.mediaTitle&&(a.title.style.top=0),a.isControlsVisible=!0)},hideControls:function(){var a=this;a.isControlsVisible&&!a.options.alwaysShowControls&&(a.controls.style.bottom="-45px",a.options.mediaTitle&&(a.title.style.top="-35px"),a.isControlsVisible=!1)},setControlsTimer:function(a){var b=this;clearTimeout(b.controlsTimer),b.controlsTimer=setTimeout(function(){b.hideControls()},a)},updateTimeline:function(a){var g,c=this,d=void 0!==a?a.target:c.media,e=null,f=b(c.slider,"width");d.buffered&&d.buffered.length>0&&d.buffered.end&&d.duration?e=d.buffered.end(d.buffered.length-1)/d.duration:void 0!==d.bytesTotal&&d.bytesTotal>0&&void 0!==d.bufferedBytes?e=d.bufferedBytes/d.bytesTotal:a&&a.lengthComputable&&0!==a.total&&(e=a.loaded/a.total),null!==e&&(e=Math.min(1,Math.max(0,e)),c.loaded.style.width=f*e+"px",c.media.paused&&setTimeout(function(){c.loaded.style.width=f*e+"px",c.updateTimeline()},300)),void 0!==c.media.currentTime&&c.media.duration&&(g=Math.round(f*c.media.currentTime/c.media.duration),c.current.style.width=g+"px",c.handle.style.left=g-Math.round(b(c.handle,"width")/2)+"px")},updateTime:function(){var a=this;a.currentTime.innerHTML=f(a.media.currentTime,a.options),(a.options.duration>1||a.media.duration>1)&&(a.durationDuration.innerHTML=f(a.options.duration>1?a.options.duration:a.media.duration,a.options))},enterFullScreen:function(){var c=this;if(c.normalHeight=b(c.container,"height"),c.normalWidth=b(c.container,"width"),"-"!=a.features.nativeFullscreenPrefix)c.container[a.features.nativeFullscreenPrefix+"RequestFullScreen"]();else if(a.features.hasOldNativeFullScreen)return c.media.webkitEnterFullscreen(),void 0;d(document.documentElement,"zy_fullscreen"),c.media.style.width=c.container.style.width="100%",c.media.style.height=c.container.style.height="100%",d(c.fullscreenBtn,"zy_unfullscreen"),c.isFullScreen=!0},exitFullScreen:function(){var b=this;(g()||b.isFullScreen)&&("-"!=a.features.nativeFullscreenPrefix?document[a.features.nativeFullscreenPrefix+"CancelFullScreen"]():a.features.hasOldNativeFullScreen&&document.webkitExitFullscreen()),e(document.documentElement,"zy_fullscreen"),b.media.style.width=b.container.style.width=b.normalWidth+"px",b.media.style.height=b.container.style.height=b.normalHeight+"px",e(b.fullscreenBtn,"zy_unfullscreen"),b.isFullScreen=!1},buildContainer:function(){var a=this;a.container=a.media.parentNode,a.container.style.overflow="hidden",a.container.style.height=(a.isVideo?b(a.container,"width")/a.options.aspectRation:a.options.audioHeight)+"px",a.container.innerHTML='<div class="zy_wrap"></div><div class="zy_controls"></div>'+(a.options.mediaTitle?'<div class="zy_title">'+a.options.mediaTitle+"</div>":""),a.title=a.container.querySelector(".zy_title"),a.media.setAttribute("preload",a.options.preload),a.container.querySelector(".zy_wrap").appendChild(a.media),a.controls=a.container.querySelector(".zy_controls"),a.isVideo&&(a.width=a.options.videoWidth,a.height=a.options.videoHeight,"100%"==a.width&&"auto"==a.height&&(a.enableAutoSize=!0),a.setPlayerSize(a.width,a.height))},buildPlaypause:function(){function c(c){(a.media.isUserClick||a.options.autoplay)&&("play"===c?(e(b,"zy_play"),d(b,"zy_pause")):(e(b,"zy_pause"),d(b,"zy_play")))}var a=this,b=document.createElement("div");b.className="zy_playpause_btn zy_play",a.controls.appendChild(b),b.addEventListener("click",function(){a.media.isUserClick=!0,a.media.paused?(a.media.play(),a.media.paused||a.options.alwaysShowControls||a.setControlsTimer(3e3)):a.media.pause()}),a.media.addEventListener("play",function(){c("play")}),a.media.addEventListener("playing",function(){c("play")}),a.media.addEventListener("pause",function(){c("pse")}),a.media.addEventListener("paused",function(){c("pse")})},buildTimeline:function(){var e,g,h,i,j,c=this,d=document.createElement("div");d.className="zy_timeline",d.innerHTML='<div class="zy_timeline_slider"><div class="zy_timeline_buffering" style="display:none"></div><div class="zy_timeline_loaded"></div><div class="zy_timeline_current"></div><div class="zy_timeline_handle"></div></div>',c.controls.appendChild(d),c.slider=d.children[0],c.buffering=c.slider.children[0],c.loaded=c.slider.children[1],c.current=c.slider.children[2],c.handle=c.slider.children[3],e=!1,g=c.slider.offsetLeft,h=b(c.slider,"width"),i=b(c.handle,"width")/2,j=function(a){var d,b=0;d=a.changedTouches?a.changedTouches[0].pageX:a.pageX,c.media.duration&&(g>d?d=g:d>h+g&&(d=h+g),c.handle.style.left=d-i-g+"px",b=(d-g)/h*c.media.duration,c.currentTime.innerHTML=f(c.media.currentTime,c.options),e&&b!==c.media.currentTime&&(c.media.currentTime=b))},a.features.hasTouch?c.slider.addEventListener("touchstart",function(a){e=!0,j(a),g=c.slider.offsetLeft,h=b(c.slider,"width"),c.slider.addEventListener("touchmove",j),c.slider.addEventListener("touchend",function(){e=!1,c.slider.removeEventListener("touchmove",j)})}):c.slider.addEventListener("mousedown",function(a){e=!0,j(a),g=c.slider.offsetLeft,h=b(c.slider,"width"),c.slider.addEventListener("mousemove",j),c.slider.addEventListener("mouseup",function(){e=!1,c.slider.addEventListener("mousemove",j)})}),c.slider.addEventListener("mouseenter",function(){c.slider.addEventListener("mousemove",j)}),c.slider.addEventListener("mouseleave",function(){e||c.slider.removeEventListener("mousemove",j)}),c.media.addEventListener("timeupdate",function(a){c.updateTimeline(a)})},buildTime:function(){var a=this,b=document.createElement("div");b.className="zy_time",b.innerHTML='<span class="zy_currenttime">'+f(0,a.options)+"</span>/"+'<span class="zy_duration">'+f(a.options.duration,a.options)+"</span>",a.controls.appendChild(b),a.currentTime=b.children[0],a.durationDuration=b.children[1],a.media.addEventListener("timeupdate",function(){a.updateTime()})},buildFullscreen:function(){var c,b=this;"-"!=a.features.nativeFullscreenPrefix&&(c=function(){b.isFullScreen&&(g()||b.exitFullScreen())},document.addEventListener(a.features.nativeFullscreenPrefix+"fullscreenchange",c)),b.fullscreenBtn=document.createElement("div"),b.fullscreenBtn.className="zy_fullscreen_btn",b.controls.appendChild(b.fullscreenBtn),b.fullscreenBtn.addEventListener("click",function(){"-"!=a.features.nativeFullscreenPrefix&&g()||b.isFullScreen?b.exitFullScreen():b.enterFullScreen()})},buildDec:function(){var d,e,b=this,c=document.createElement("div");c.className="dec_loading",c.style.display="none",b.container.appendChild(c),d=document.createElement("div"),d.className="dec_error",d.style.display="none",d.innerHTML="播放异常",b.container.appendChild(d),e=document.createElement("div"),a.features.isVendorBigPlay||(e.className="dec_play",b.container.appendChild(e),e.addEventListener("click",function(){b.media.isUserClick=!0,b.media.play(),b.media.paused||b.options.alwaysShowControls||b.setControlsTimer(3e3)})),b.media.addEventListener("play",function(){b.media.isUserClick&&(e.style.display="none",c.style.display="",b.buffering.style.display="none")}),b.media.addEventListener("playing",function(){e.style.display="none",c.style.display="none",b.buffering.style.display="none",d.style.display="none"}),b.media.addEventListener("seeking",function(){c.style.display="",e.style.display="none",b.buffering.style.display=""}),b.media.addEventListener("seeked",function(){c.style.display="none",b.buffering.style.display="none"}),b.media.addEventListener("pause",function(){e.style.display=""}),b.media.addEventListener("waiting",function(){c.style.display="",e.style.display="none",b.buffering.style.display=""}),b.media.addEventListener("error",function(a){c.style.display="none",e.style.display="",b.buffering.style.display="none",b.media.pause(),d.style.display="","function"==typeof b.options.error&&b.options.error(a)})},init:function(){var d,b=this,c=["Container","Playpause","Timeline","Time"];for(b.options.enableFullscreen&&!a.features.isVendorFullscreen&&b.isVideo&&c.push("Fullscreen"),b.isVideo&&c.push("Dec"),d=0;d<c.length;d++)try{b["build"+c[d]]()}catch(e){}b.isVideo&&(a.features.hasTouch?b.media.addEventListener("click",function(){b.isControlsVisible?b.hideControls():(b.showControls(),b.media.paused||b.options.alwaysShowControls||b.setControlsTimer(3e3))}):(b.media.addEventListener("click",function(){b.media.paused?b.media.play():b.media.pause()}),b.container.addEventListener("mouseenter",function(){b.showControls(),b.options.alwaysShowControls||b.setControlsTimer(3e3)}),b.container.addEventListener("mousemove",function(){b.showControls(),b.options.alwaysShowControls||b.setControlsTimer(3e3)})),b.options.hideVideoControlsOnLoad&&b.hideControls(),b.media.addEventListener("loadedmetadata",function(){b.enableAutoSize&&setTimeout(function(){isNaN(b.media.videoHeight)||b.setPlayerSize()},50)})),b.media.addEventListener("play",function(){var c,d;for(d in a.players)if(c=a.players[d],c.id!=b.id&&b.options.pauseOtherPlayers&&!c.paused&&!c.ended)try{c.media.pause()}catch(e){}}),window.addEventListener("orientationchange",function(){setTimeout(function(){b.setPlayerSize()},500)}),b.media.addEventListener("ended",function(a){b.media.currentTime=0,b.options.autoLoop?b.media.play():(b.isVideo&&setTimeout(function(){b.container.querySelector(".dec_loading").style.display="none"},20),b.media.pause()),b.updateTimeline(a)}),b.media.addEventListener("loadedmetadata",function(){b.updateTime()}),b.options.autoplay&&(b.media.isUserClick=!1,b.media.play()),"function"==typeof b.options.success&&b.options.success(b.media)}},window.zymedia=function(b,c){"string"==typeof b?[].forEach.call(document.querySelectorAll(b),function(b){new a.MediaPlayer(b,c)}):new a.MediaPlayer(b,c)}}();
+(function() {
+
+    var zyMedia = {};
+
+
+    // Default config
+    zyMedia.config = {
+        // Overrides the type specified, for dynamic instantiation
+        type: '',
+        // Set media title
+        mediaTitle: '',
+        // Force native controls
+        nativeControls: false,
+        // Autoplay
+        autoplay: false,
+        // Preload, not 'auto', in native app of xiaomi HM 1SW,
+        // the images does not synchronize with sound of video which is cross-domain
+        preload: 'none',
+        // Video width
+        videoWidth: '100%',
+        // Video height
+        videoHeight: 'auto',
+        // Aspect ration 16:9
+        aspectRation: (16 / 9),
+        // Audio width
+        audioWidth: '100%',
+        // Audio height
+        audioHeight: 44,
+        // AutoLoop, true for infinite loop, false for rewind to beginning when media ends
+        autoLoop: false,
+        // Time format to show. Default 1 for 'mm:ss', 2 for 'm:s'
+        timeFormatType: 1,
+        // Forces the hour marker (##:00:00)
+        alwaysShowHours: false,
+        // Hide controls when playing and mouse is not over the video
+        alwaysShowControls: false,
+        // Display the video control
+        hideVideoControlsOnLoad: false,
+        // Show fullscreen button
+        enableFullscreen: true,
+        // When this player starts, it will pause other players
+        pauseOtherPlayers: true,
+        // When page's visibilityState is hidden, pause all media
+        enableVisibilityState: true,
+        // Media duration
+        duration: 0,
+        // Sucess callback
+        success: null,
+        // Error callback
+        error: null
+    };
+
+
+    // Feature detect
+    (function(t) {
+        var ua = window.navigator.userAgent.toLowerCase();
+        var v = document.createElement('video');
+
+        t.isBustedAndroid = /android 2\.[12]/i.test(ua);
+        t.isChromium = /chromium/i.test(ua);
+
+        t.hasTouch = 'ontouchstart' in window;
+        t.supportsCanPlayType = typeof v.canPlayType !== 'undefined';
+
+        // Detect playsinline
+        t.isPlaysInline = matchMedia('(-webkit-video-playable-inline)').matches;
+        // Vendor for no big Play button
+        t.isVendorBigPlay = /iphone/i.test(ua) && !window.MSStream;
+        // Vendor for no controls bar
+        t.isVendorControls = /baidu/i.test(ua);
+        // Prefix of current working browser
+
+        t.nativeFullscreenPrefix = (function() {
+            if (v.requestFullScreen) {
+                return '';
+            } else if (v.webkitRequestFullScreen) {
+                return 'webkit'
+            } else if (v.mozRequestFullScreen) {
+                return 'moz'
+            } else if (v.msRequestFullScreen) {
+                return 'ms'
+            }
+            return '-'
+        })();
+
+        if (typeof document.visibilityState != 'undefined') {
+            t.vChange = 'visibilitychange';
+            t.vState = 'visibilityState'
+        } else if (typeof document.webkitVisibilityState != 'undefined') {
+            t.vChange = 'webkitvisibilitychange';
+            t.vState = 'webkitVisibilityState'
+        } else {
+            t.vChange = '';
+            t.vState = ''
+        }
+
+        // None-standard
+        t.hasOldNativeFullScreen = (t.nativeFullscreenPrefix == '-') && v.webkitEnterFullscreen;
+
+        // OS X 10.5 can't do this even if it says it can
+        if (t.hasOldNativeFullScreen && /mac os x 10_5/i.test(ua)) {
+            t.nativeFullscreenPrefix = '-';
+            t.hasOldNativeFullScreen = false
+        }
+    })(zyMedia.features = {});
+
+
+    // Get style
+    function _css(el, property) {
+        return parseInt(getComputedStyle(el, null).getPropertyValue(property))
+    }
+
+    // Has Class
+    function _hasClass(el, token) {
+        return new RegExp('(\\s|^)' + token + '(\\s|$)').test(el.className)
+    }
+
+    // Add class
+    function _addClass(el, token) {
+        if (el.classList) {
+            el.classList.add(token)
+        } else if (!_hasClass(el, token)) {
+            el.className += '' + token
+        }
+    }
+
+    // Remove class
+    function _removeClass(el, token) {
+        if (el.classList) {
+            el.classList.remove(token)
+        } else if (_hasClass(el, token)) {
+            el.className = el.className.replace(new RegExp('(\\s|^)' + token + '(\\s|$)'), ' ').replace(/^\s+|\s+$/g, '')
+        }
+    }
+
+    // Get time format
+    function timeFormat(time, options) {
+        // Video's duration is Infinity in GiONEE(金立) device
+        if (!isFinite(time) || time < 0) {
+            time = 0;
+        }
+        // Get hours
+        var _time = options.alwaysShowHours ? [0] : [];
+        if (Math.floor(time / 3600) % 24) {
+            _time.push(Math.floor(time / 3600) % 24)
+        }
+        // Get minutes
+        _time.push(Math.floor(time / 60) % 60);
+        // Get seconds
+        _time.push(Math.floor(time % 60));
+        _time = _time.join(':');
+        // Fill '0'
+        if (options.timeFormatType == 1) {
+            _time = _time.replace(/(:|^)([0-9])(?=:|$)/g, '$10$2')
+        }
+
+        return _time
+    };
+
+    // Report whether or not the document in fullscreen mode
+    function isInFullScreenMode() {
+        return document.fullscreenElement || document.mozFullScreen || document.webkitIsFullScreen
+    }
+
+    // Get media type from file extension
+    function getTypeFromFileExtension(url) {
+        url = url.toLowerCase().split('?')[0];
+        var _ext = url.substring(url.lastIndexOf('.') + 1);
+        var _av = /mp4|m4v|ogg|ogv|m3u8|webm|webmv|wmv|mpeg|mov/gi.test(_ext) ? 'video/' : 'audio/';
+
+        switch (_ext) {
+            case 'mp4':
+            case 'm4v':
+            case 'm4a':
+                return _av + 'mp4';
+            case 'webm':
+            case 'webma':
+            case 'webmv':
+                return _av + 'webm';
+            case 'ogg':
+            case 'oga':
+            case 'ogv':
+                return _av + 'ogg';
+            case 'm3u8':
+                return 'application/x-mpegurl';
+            case 'ts':
+                return _av + 'mp2t';
+            default:
+                return _av + _ext;
+        }
+    }
+
+    // Get media type
+    function getType(url, type) {
+        // If no type is specified, try to get from the extension
+        if (url && !type) {
+            return getTypeFromFileExtension(url)
+        } else {
+            // Only return the mime part of the type in case the attribute contains the codec
+            // see http://www.whatwg.org/specs/web-apps/current-work/multipage/video.html#the-source-element
+            // `video/mp4; codecs="avc1.42E01E, mp4a.40.2"` becomes `video/mp4`
+            if (type && ~type.indexOf(';')) {
+                return type.substr(0, type.indexOf(';'))
+            } else {
+                return type
+            }
+        }
+    }
+
+    // Detect if current type is supported
+    function detectType(media, options, src) {
+        var mediaFiles = [];
+        var i;
+        var n;
+        var isCanPlay;
+
+        // Get URL and type
+        if (options.type) {
+            // Accept either string or array of types
+            if (typeof options.type == 'string') {
+                mediaFiles.push({
+                    type: options.type,
+                    url: src
+                });
+            } else {
+                for (i = 0; i < options.type.length; i++) {
+                    mediaFiles.push({
+                        type: options.type[i],
+                        url: src
+                    });
+                }
+            }
+        } else if (src !== null) {
+            // If src attribute
+            mediaFiles.push({
+                type: getType(src, media.getAttribute('type')),
+                url: src
+            });
+        } else {
+            // If <source> elements
+            for (i = 0; i < media.children.length; i++) {
+                n = media.children[i];
+
+                if (n.nodeType == 1 && n.tagName.toLowerCase() == 'source') {
+                    src = n.getAttribute('src');
+                    mediaFiles.push({
+                        type: getType(src, n.getAttribute('type')),
+                        url: src
+                    });
+                }
+            }
+        }
+
+        // For Android which doesn't implement the canPlayType function (always returns '')
+        if (zyMedia.features.isBustedAndroid) {
+            media.canPlayType = function(type) {
+                return /video\/(mp4|m4v)/i.test(type) ? 'maybe' : ''
+            };
+        }
+        // For Chromium to specify natively supported video codecs (i.e. WebM and Theora)
+        if (zyMedia.features.isChromium) {
+            media.canPlayType = function(type) {
+                return /video\/(webm|ogv|ogg)/i.test(type) ? 'maybe' : ''
+            };
+        }
+
+        if (zyMedia.features.supportsCanPlayType) {
+            for (i = 0; i < mediaFiles.length; i++) {
+                // Normal detect
+                if (mediaFiles[i].type == "video/m3u8" || media.canPlayType(mediaFiles[i].type).replace(/no/, '') !== '' ||
+                    // For Mac/Safari 5.0.3 which answers '' to canPlayType('audio/mp3') but 'maybe' to canPlayType('audio/mpeg')
+                    media.canPlayType(mediaFiles[i].type.replace(/mp3/, 'mpeg')).replace(/no/, '') !== '' ||
+                    // For m4a supported by detecting mp4 support
+                    media.canPlayType(mediaFiles[i].type.replace(/m4a/, 'mp4')).replace(/no/, '') !== '') {
+                    isCanPlay = true;
+                    break
+                }
+            }
+        }
+
+        return isCanPlay
+    };
+
+    // Mediaplayer instance No
+    var zymIndex = 0;
+    // Store Mediaplayer instance
+    zyMedia.players = {};
+
+
+    // Constructor, MediaPlayer
+    zyMedia.MediaPlayer = function(media, option) {
+        var t = this;
+        var i;
+
+        // Make sure it can't be instantiated again
+        if (media.isInstantiated) {
+            return
+        } else {
+            media.isInstantiated = true
+        }
+
+        t.media = media;
+
+        // Detect video or audio
+        var _tagName = t.media.tagName.toLowerCase();
+        if (!/audio|video/.test(_tagName)) return;
+
+        t.isVideo = _tagName === 'video';
+
+        // Extend options
+        t.options = {};
+        for (i in zyMedia.config) {
+            t.options[i] = zyMedia.config[i]
+        }
+
+        try {
+            for (i in option) {
+                t.options[i] = option[i]
+            }
+            // Data-config has the highest priority
+            var config = JSON.parse(t.media.getAttribute('data-config'));
+            for (i in config) {
+                t.options[i] = config[i]
+            }
+        } catch (exp) {}
+
+        // Autoplay be disabled
+        if (t.options.autoplay) {
+            t.options.autoplay = !zyMedia.features.isVendorAutoplay
+        }
+
+        if (!t.isVideo) {
+            t.options.alwaysShowControls = true
+        }
+
+        if (t.options.nativeControls || zyMedia.features.isVendorControls) {
+            // Use native controls
+            t.media.setAttribute('controls', 'controls')
+        } else {
+            var src = t.media.getAttribute('src');
+            src = src === '' ? null : src;
+
+            if (detectType(t.media, t.options, src)) {
+                // Unique ID
+                t.id = 'zym_' + zymIndex++;
+                zyMedia.players[t.id] = t;
+                t.init()
+            } else {
+                alert('不支持此' + (t.isVideo ? '视' : '音') + '频')
+            }
+        }
+    };
+
+
+    zyMedia.MediaPlayer.prototype = {
+
+        isControlsVisible: true,
+        isFullScreen: false,
+
+        setPlayerSize: function(width, height) {
+            var t = this;
+
+            // Set t.width
+            if (width == undefined || width == '100%') {
+                t.width = _css(t.container, 'width')
+            }
+
+            // Set t.height
+            if (height == undefined || height == 'auto') {
+                var nativeWidth = t.media.videoWidth;
+                var nativeHeight = t.media.videoHeight;
+                // Uniform scale
+                if (nativeWidth && nativeHeight) {
+                    if (Math.abs(t.options.aspectRation - nativeWidth / nativeHeight) < .1) {
+                        t.options.aspectRation = nativeWidth / nativeHeight
+                    }
+                }
+                t.height = parseInt(t.width / t.options.aspectRation)
+            }
+
+            t.media.style.width = t.width + 'px';
+            t.media.style.height = t.container.style.height = t.height + 'px'
+        },
+
+        showControls: function() {
+            var t = this;
+
+            if (t.isControlsVisible)
+                return;
+
+            t.controls.style.bottom = 0;
+
+            if (t.options.mediaTitle) {
+                t.title.style.top = 0
+            }
+
+            t.isControlsVisible = true;
+        },
+
+        hideControls: function() {
+            var t = this;
+
+            if (!t.isControlsVisible || t.options.alwaysShowControls)
+                return;
+
+            t.controls.style.bottom = '-45px';
+
+            if (t.options.mediaTitle) {
+                t.title.style.top = '-35px'
+            }
+
+            t.isControlsVisible = false
+        },
+
+        setControlsTimer: function(timeout) {
+            var t = this;
+            clearTimeout(t.controlsTimer);
+
+            t.controlsTimer = setTimeout(function() {
+                t.hideControls()
+            }, timeout);
+        },
+
+        updateTimeline: function(e) {
+            var t = this;
+            var el = (e !== undefined) ? e.target : t.media;
+            var percent = null;
+            var _W = _css(t.slider, 'width');
+
+            // Support buffered
+            if (el.buffered && el.buffered.length > 0 && el.buffered.end && el.duration) {
+                percent = el.buffered.end(el.buffered.length - 1) / el.duration
+            }
+            // Support bufferedBytes
+            else if (el.bytesTotal !== undefined && el.bytesTotal > 0 && el.bufferedBytes !== undefined) {
+                percent = el.bufferedBytes / el.bytesTotal
+            }
+            // Support progressEvent.lengthComputable
+            else if (e && e.lengthComputable && e.total !== 0) {
+                percent = e.loaded / e.total
+            }
+
+            // Update the timeline
+            if (percent !== null) {
+                percent = Math.min(1, Math.max(0, percent));
+                t.loaded.style.width = _W * percent + 'px';
+                // Adjust when pause change from playing (魅族)
+                if (t.media.paused) {
+                    setTimeout(function() {
+                        t.loaded.style.width = _W * percent + 'px';
+                        t.updateTimeline()
+                    }, 300)
+                };
+            }
+
+            if (t.media.currentTime !== undefined && t.media.duration) {
+                // Update bar and handle
+                var _w = Math.round(_W * t.media.currentTime / t.media.duration);
+                t.current.style.width = _w + 'px';
+                t.handle.style.left = _w - Math.round(_css(t.handle, 'width') / 2) + 'px'
+            }
+        },
+
+        updateTime: function() {
+            var t = this;
+            t.currentTime.innerHTML = timeFormat(t.media.currentTime, t.options);
+
+            // Duration is 1 in (读者) device
+            if (t.options.duration > 1 || t.media.duration > 1) {
+                t.durationDuration.innerHTML = timeFormat(t.options.duration > 1 ? t.options.duration : t.media.duration, t.options)
+            }
+        },
+
+        enterFullScreen: function() {
+            var t = this;
+            // Attempt to do true fullscreen
+            if (zyMedia.features.nativeFullscreenPrefix != '-') {
+                t.container[zyMedia.features.nativeFullscreenPrefix + 'RequestFullScreen']()
+            } else if (zyMedia.features.hasOldNativeFullScreen) {
+                t.media.webkitEnterFullscreen();
+                return
+            }
+
+            // Set it to not show scroll bars so 100% will work
+            _addClass(document.documentElement, 'zy_fullscreen');
+
+            // Make full size
+            t.media.style.width = t.container.style.width = '100%';
+            t.media.style.height = t.container.style.height = '100%';
+            _addClass(t.fullscreenBtn, 'zy_unfullscreen');
+            t.isFullScreen = true
+        },
+
+        exitFullScreen: function() {
+            var t = this;
+            // Come out of native fullscreen
+            if (isInFullScreenMode() || t.isFullScreen) {
+                if (zyMedia.features.nativeFullscreenPrefix != '-') {
+                    document[zyMedia.features.nativeFullscreenPrefix + 'CancelFullScreen']()
+                } else if (zyMedia.features.hasOldNativeFullScreen) {
+                    document.webkitExitFullscreen()
+                }
+            }
+            _removeClass(document.documentElement, 'zy_fullscreen');
+            t.media.style.width = t.width + 'px';
+            t.container.style.width = '';
+            t.media.style.height = t.container.style.height = t.height + 'px';
+            _removeClass(t.fullscreenBtn, 'zy_unfullscreen');
+            t.isFullScreen = false
+        },
+
+        // Media container
+        buildContainer: function() {
+            var t = this;
+
+            t.container = t.media.parentNode;
+            t.container.style.overflow = 'hidden';
+            // Preset container's height by aspectRation
+            t.container.style.height = (t.isVideo ? _css(t.container, 'width') / t.options.aspectRation : t.options.audioHeight) + 'px';
+            t.container.innerHTML = '<div class="zy_wrap"></div><div class="zy_controls"></div>' +
+                (t.options.mediaTitle ? '<div class="zy_title">' + t.options.mediaTitle + '</div>' : '');
+
+            t.title = t.container.querySelector('.zy_title');
+
+            t.media.setAttribute('preload', t.options.preload);
+            // iOS's playsinline, https://webkit.org/blog/6784/new-video-policies-for-ios/
+            if (t.isPlaysInline) {
+                t.media.setAttribute('playsinline', '')
+            }
+            t.container.querySelector('.zy_wrap').appendChild(t.media);
+            t.controls = t.container.querySelector('.zy_controls');
+
+            if (t.isVideo) {
+                t.width = t.options.videoWidth;
+                t.height = t.options.videoHeight;
+
+                if (t.width == '100%' && t.height == 'auto') {
+                    t.enableAutoSize = true
+                }
+                t.setPlayerSize(t.width, t.height)
+            }
+        },
+
+        // Play/pause button
+        buildPlaypause: function() {
+            var t = this;
+            var play = document.createElement('div');
+            play.className = 'zy_playpause_btn_play';
+            t.controls.appendChild(play);
+            play.addEventListener('click', function() {
+                t.media.isUserClick = true;
+
+                if (t.media.paused) {
+                    t.media.play();
+                    // Controls bar auto hide after 3s
+                    if (!t.media.paused && !t.options.alwaysShowControls) {
+                        t.setControlsTimer(3000)
+                    }
+                } else {
+                    t.media.pause()
+                }
+            });
+
+            function togglePlayPause(s) {
+                if (t.media.isUserClick || t.options.autoplay) {
+                    if ('play' === s) {
+                        play.className = 'zy_playpause_btn_pause'
+                    } else {
+                        play.className = 'zy_playpause_btn_play'
+                    }
+                }
+            };
+
+            t.media.addEventListener('play', function() {
+                togglePlayPause('play')
+            });
+
+            t.media.addEventListener('playing', function() {
+                togglePlayPause('play')
+            });
+
+            t.media.addEventListener('pause', function() {
+                togglePlayPause('pse')
+            });
+
+            t.media.addEventListener('paused', function() {
+                togglePlayPause('pse')
+            });
+        },
+
+        // Timeline
+        buildTimeline: function() {
+            var t = this;
+            var timeline = document.createElement('div');
+            timeline.className = 'zy_timeline';
+            timeline.innerHTML = '<div class="zy_timeline_slider">' +
+                '<div class="zy_timeline_buffering" style="display:none"></div>' +
+                '<div class="zy_timeline_loaded"></div>' +
+                '<div class="zy_timeline_current"></div>' +
+                '<div class="zy_timeline_handle"></div>' +
+                '</div>';
+            t.controls.appendChild(timeline);
+
+            t.slider = timeline.children[0];
+            t.buffering = t.slider.children[0];
+            t.loaded = t.slider.children[1];
+            t.current = t.slider.children[2];
+            t.handle = t.slider.children[3];
+
+            var isPointerDown = false;
+            var _X = t.slider.offsetLeft;
+            var _W = _css(t.slider, 'width');
+            var _W_HANDLE_HALF = _css(t.handle, 'width') / 2;
+
+            var pointerMove = function(e) {
+                var _time = 0;
+                var x;
+
+                if (e.changedTouches) {
+                    x = e.changedTouches[0].pageX
+                } else {
+                    x = e.pageX
+                }
+
+                if (t.media.duration) {
+                    if (x < _X) {
+                        x = _X
+                    } else if (x > _W + _X) {
+                        x = _W + _X
+                    }
+
+                    // Update handle element position
+                    t.handle.style.left = x - _W_HANDLE_HALF - _X + 'px';
+
+                    _time = ((x - _X) / _W) * t.media.duration;
+                    // Update currentTime element value
+                    t.currentTime.innerHTML = timeFormat(t.media.currentTime, t.options);
+
+                    if (isPointerDown && _time !== t.media.currentTime) {
+                        t.media.currentTime = _time
+                    }
+                }
+            };
+            // Handle clicks
+            if (zyMedia.features.hasTouch) {
+                t.slider.addEventListener('touchstart', function(e) {
+                    isPointerDown = true;
+                    pointerMove(e);
+                    _X = t.slider.offsetLeft;
+                    _W = _css(t.slider, 'width');
+                    t.slider.addEventListener('touchmove', pointerMove);
+                    t.slider.addEventListener('touchend', function(e) {
+                        isPointerDown = false;
+                        t.slider.removeEventListener('touchmove', pointerMove)
+                    });
+                });
+            } else {
+                t.slider.addEventListener('mousedown', function(e) {
+                    isPointerDown = true;
+                    pointerMove(e);
+                    _X = t.slider.offsetLeft;
+                    _W = _css(t.slider, 'width');
+                    t.slider.addEventListener('mousemove', pointerMove);
+                    t.slider.addEventListener('mouseup', function(e) {
+                        isPointerDown = false;
+                        t.slider.addEventListener('mousemove', pointerMove)
+                    });
+                });
+            }
+
+            t.slider.addEventListener('mouseenter', function(e) {
+                t.slider.addEventListener('mousemove', pointerMove);
+            });
+
+            t.slider.addEventListener('mouseleave', function(e) {
+                if (!isPointerDown) {
+                    t.slider.removeEventListener('mousemove', pointerMove)
+                }
+            });
+
+            //4Hz ~ 66Hz, no longer than 250ms
+            t.media.addEventListener('timeupdate', function(e) {
+                t.updateTimeline(e)
+            });
+        },
+
+        // Current and duration time 00:00/00:00
+        buildTime: function() {
+            var t = this;
+
+            var time = document.createElement('div');
+            time.className = 'zy_time';
+            time.innerHTML = '<span class="zy_currenttime">' +
+                timeFormat(0, t.options) +
+                '</span>/' +
+                '<span class="zy_duration">' +
+                timeFormat(t.options.duration, t.options) +
+                '</span>';
+            t.controls.appendChild(time);
+
+            t.currentTime = time.children[0];
+            t.durationDuration = time.children[1];
+
+            //4Hz ~ 66Hz, no longer than 250ms
+            t.media.addEventListener('timeupdate', function() {
+                t.updateTime()
+            });
+        },
+
+        // Fullscreen button
+        buildFullscreen: function() {
+            var t = this;
+            // Native events
+            if (zyMedia.features.nativeFullscreenPrefix != '-') {
+                // Chrome doesn't alays fire this in an iframe
+                var func = function(e) {
+                    if (t.isFullScreen) {
+                        if (!isInFullScreenMode()) {
+                            t.exitFullScreen()
+                        }
+                    }
+                };
+
+                document.addEventListener(zyMedia.features.nativeFullscreenPrefix + 'fullscreenchange', func)
+            }
+
+            t.fullscreenBtn = document.createElement('div');
+            t.fullscreenBtn.className = 'zy_fullscreen_btn';
+            t.controls.appendChild(t.fullscreenBtn);
+
+            t.fullscreenBtn.addEventListener('click', function() {
+                if ((zyMedia.features.nativeFullscreenPrefix != '-' && isInFullScreenMode()) || t.isFullScreen) {
+                    t.exitFullScreen()
+                } else {
+                    t.enterFullScreen()
+                }
+            });
+        },
+
+        // bigPlay, loading and error info
+        buildDec: function() {
+            var t = this;
+
+            var loading = document.createElement('div');
+            loading.className = 'dec_loading';
+            loading.style.display = 'none';
+            t.container.appendChild(loading);
+
+            var error = document.createElement('div');
+            error.className = 'dec_error';
+            error.style.display = 'none';
+            error.innerHTML = '播放异常';
+            t.container.appendChild(error);
+
+            var bigPlay = document.createElement('div');
+
+            if (!zyMedia.features.isVendorBigPlay) {
+                bigPlay.className = 'dec_play';
+                t.container.appendChild(bigPlay);
+                bigPlay.addEventListener('click', function() {
+                    // For some device trigger 'play' event
+                    t.media.isUserClick = true;
+
+                    t.media.play();
+                    // Controls bar auto hide after 3s
+                    if (!t.media.paused && !t.options.alwaysShowControls) {
+                        t.setControlsTimer(3000)
+                    }
+                });
+            }
+
+            t.media.addEventListener('play', function() {
+                // Only for user click
+                if (t.media.isUserClick) {
+                    bigPlay.style.display = 'none';
+                    loading.style.display = '';
+                    t.buffering.style.display = 'none'
+                }
+            });
+
+            t.media.addEventListener('playing', function() {
+                bigPlay.style.display = 'none';
+                loading.style.display = 'none';
+                t.buffering.style.display = 'none';
+                error.style.display = 'none';
+            });
+
+            t.media.addEventListener('seeking', function() {
+                loading.style.display = '';
+                bigPlay.style.display = 'none';
+                t.buffering.style.display = '';
+            });
+
+            t.media.addEventListener('seeked', function() {
+                loading.style.display = 'none';
+                t.buffering.style.display = 'none';
+            });
+
+            t.media.addEventListener('pause', function() {
+                bigPlay.style.display = ''
+            });
+
+            t.media.addEventListener('waiting', function() {
+                loading.style.display = '';
+                bigPlay.style.display = 'none';
+                t.buffering.style.display = '';
+            });
+
+            // Don't listen to 'loadeddata' and 'canplay',
+            // some Android device can't fire 'canplay' or irregular working when use 'createEvent' to trigger 'canplay' (读者i800)
+
+            // Error handling
+            t.media.addEventListener('error', function(e) {
+                loading.style.display = 'none';
+                bigPlay.style.display = '';
+                t.buffering.style.display = 'none';
+                t.media.pause();
+                error.style.display = '';
+
+                if (typeof t.options.error == 'function') {
+                    t.options.error(e);
+                }
+            });
+        },
+
+        init: function() {
+            var t = this;
+
+            // Build
+            var batch = ['Container', 'Playpause', 'Timeline', 'Time'];
+            if (t.options.enableFullscreen && t.isVideo) {
+                batch.push('Fullscreen')
+            }
+
+            if (t.isVideo) {
+                batch.push('Dec')
+            }
+
+            for (var i = 0; i < batch.length; i++) {
+                try {
+                    t['build' + batch[i]]()
+                } catch (exp) {}
+            }
+
+            // Controls fade
+            if (t.isVideo) {
+                if (zyMedia.features.hasTouch) {
+                    t.media.addEventListener('click', function() {
+                        // Toggle controls
+                        if (t.isControlsVisible) {
+                            t.hideControls()
+                        } else {
+                            t.showControls();
+                            // Controls bar auto hide after 3s
+                            if (!t.media.paused && !t.options.alwaysShowControls) {
+                                t.setControlsTimer(3000)
+                            }
+                        }
+                    });
+                } else {
+                    // Click to play/pause
+                    t.media.addEventListener('click', function() {
+                        if (t.media.paused) {
+                            t.media.play()
+                        } else {
+                            t.media.pause()
+                        }
+                    });
+
+                    // Show/hide controls
+                    t.container.addEventListener('mouseenter', function() {
+                        t.showControls();
+
+                        if (!t.options.alwaysShowControls) {
+                            t.setControlsTimer(3000)
+                        }
+                    });
+
+                    t.container.addEventListener('mousemove', function() {
+                        t.showControls();
+
+                        if (!t.options.alwaysShowControls) {
+                            t.setControlsTimer(3000)
+                        }
+                    });
+                }
+
+                if (t.options.hideVideoControlsOnLoad) {
+                    t.hideControls()
+                }
+
+                t.media.addEventListener('loadedmetadata', function(e) {
+                    if (t.enableAutoSize) {
+                        // For more properly videoWidth or videoHeight of HM 1SW(小米), QQ browser is 0
+                        setTimeout(function() {
+                            if (!isNaN(t.media.videoHeight)) {
+                                t.setPlayerSize()
+                            }
+                        }, 50)
+                    }
+                });
+
+            }
+
+            t.media.addEventListener('play', function() {
+                var p;
+
+                for (var i in zyMedia.players) {
+                    p = zyMedia.players[i];
+
+                    if (p.id != t.id && t.options.pauseOtherPlayers && !p.paused && !p.ended) {
+                        try {
+                            p.media.pause()
+                        } catch (exp) {}
+                    }
+                }
+            });
+
+            // Pause all media when page's visibilityState is hidden
+            if (t.options.enableVisibilityState && zyMedia.features.vChange) {
+                document.addEventListener(zyMedia.features.vChange, function() {
+                    if (document[zyMedia.features.vState] == 'hidden') {
+                        // 100ms time for switching between app's webviews
+                        setTimeout(function() {
+                            [].forEach.call(document.querySelectorAll('video, audio'), function(el) {
+                                el.pause()
+                            })
+                        }, 100)
+                    }
+                });
+
+                // Only one times for binding zyMedia.features.vChange
+                zyMedia.features.vChange = ''
+            }
+
+            // Adjust controls when orientation change, 500ms for Sumsung tablet
+            window.addEventListener('orientationchange', function() {
+                // Ignore orientation in fullscreen status
+                if(!isInFullScreenMode() && !t.isFullScreen){
+                    setTimeout(function() {
+                        t.setPlayerSize()
+                    }, 500)
+                }
+            });
+
+            t.media.addEventListener('ended', function(e) {
+                t.media.currentTime = 0;
+
+                if (t.options.autoLoop) {
+                    t.media.play()
+                } else {
+                    // Fixing an Android stock browser bug, where "seeked" isn't fired correctly after ending the video and jumping to the beginning
+                    if (t.isVideo) {
+                        setTimeout(function() {
+                            t.container.querySelector('.dec_loading').style.display = 'none'
+                        }, 20)
+                    }
+
+                    t.media.pause()
+                }
+
+                t.updateTimeline(e)
+            });
+
+            t.media.addEventListener('loadedmetadata', function(e) {
+                t.updateTime()
+            });
+
+            if (t.options.autoplay) {
+                t.media.isUserClick = false;
+                t.media.play()
+            }
+
+            if (typeof t.options.success == 'function') {
+                t.options.success(t.media)
+            }
+        }
+
+    };
+
+
+    // String or node
+    window.zymedia = function(selector, options) {
+        if (typeof selector === 'string') {
+            [].forEach.call(document.querySelectorAll(selector), function(el) {
+                new zyMedia.MediaPlayer(el, options)
+            });
+        } else {
+            new zyMedia.MediaPlayer(selector, options)
+        }
+    }
+
+
+})()

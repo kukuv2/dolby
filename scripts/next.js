@@ -13,9 +13,10 @@ $(document).ready(function($) {
 		$('.zy_controls').css({
 			'bottom': 0
 		});
-        $('.zy_play').trigger('click')
+        $('.zy_playpause_btn_play').trigger('click')
 		// $(this).hide()
 	});
+	// zymedia('video',{autoplay: false,enableFullscreen: false});
 	zymedia('video',{autoplay: false});
 	var windowheight = $(window).height()
 	$(window).scroll(function(event) {
@@ -24,6 +25,7 @@ $(document).ready(function($) {
 		}
 	});
     var u = navigator.userAgent
+    // if(u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger'){
     var android = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1
     if(android){
         $(".topB").css({
